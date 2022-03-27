@@ -1,0 +1,186 @@
+function Clears() {
+  var spreads   = SpreadsheetApp.getActiveSpreadsheet();
+  var consul = spreads.getSheetByName("INPUTS");
+
+var cellToclear =["F2","F4","F6","F8","F10","F12","F14","F16"];
+for (var i=0; i<cellToclear.length; i++) {
+  consul.getRange(cellToclear[i]).clearContent();
+  }
+}
+
+//Input 
+function Inputs() {
+  var spreads   = SpreadsheetApp.getActiveSpreadsheet();
+  var consul = spreads.getSheetByName("INPUTS");
+  var consul_data = spreads.getSheetByName("Data_Franchisee");
+
+  var values= [[consul.getRange("F2").getValue(),
+                consul.getRange("F4").getValue(),
+                consul.getRange("F6").getValue(),
+                consul.getRange("F8").getValue(),
+                consul.getRange("F10").getValue(),
+                consul.getRange("F12").getValue(),
+                consul.getRange("F14").getValue(),
+                consul.getRange("F16").getValue(),]]
+  consul_data.getRange(consul_data.getLastRow()+1, 1, 1, 8).setValues(values);
+  Clears();
+  
+//var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+var lr = consul_data.getLastRow()
+
+for (var i=4;i<=lr;i++){
+    var value1 =consul_data.getRange(i,9).getValue();
+    var value2 =consul_data.getRange(i,8).getValue();
+    var value3 =consul_data.getRange(i,7).getValue();
+    var value4 =consul_data.getRange(i,4).getValue();
+
+    if (value1 >= 3 && value2 >= 3 && value3 >=3 && value4 >=3) {
+        consul_data.getRange(i,10).setValue("Hot Leads");
+  }
+    else {consul_data.getRange(i,10).setValue("Soft Leads")}
+  };
+
+//var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+consul_data.getRange("I4").setFormula("=(D4*0.3)+(G4*0.4)+(H4*0.3)");
+
+var lr = consul_data.getLastRow()
+var fillDownRange = consul_data.getRange(4,9,lr-3);
+consul_data.getRange("I4").copyTo(fillDownRange);
+
+//var ss = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+//var lr = consul_data.getLastRow()
+
+for (var i=4;i<=lr;i++){
+    var value1 =consul_data.getRange(i,5).getValue();
+    var value2 = consul_data.getRange(i,6).getValue();
+
+
+    if (value1 >= value2) {
+        consul_data.getRange(i,7).setValue("5");
+  }
+    else if (value1 >= (value2*(1-0.1))) {
+        consul_data.getRange(i,7).setValue("4");
+  }
+    else if (value1 >= (value2*(1-0.2))) {
+        consul_data.getRange(i,7).setValue("3");
+  }
+    else if (value1 >= (value2*(1-0.5))) {
+        consul_data.getRange(i,7).setValue("2");
+  }
+    else {consul_data.getRange(i,7).setValue("1")
+    }
+  }
+}
+
+function Clears2() {
+  var spreads   = SpreadsheetApp.getActiveSpreadsheet();
+  var consul = spreads.getSheetByName("INPUTS2");
+
+var cellToclear =["F2","F4","F6","F8","F10","F12","F14","F16"];
+for (var i=0; i<cellToclear.length; i++) {
+  consul.getRange(cellToclear[i]).clearContent();
+  }
+}
+
+function Inputs2() {
+  var spreads   = SpreadsheetApp.getActiveSpreadsheet();
+  var consul = spreads.getSheetByName("INPUTS2");
+  var consul_data = spreads.getSheetByName("Data_Franchisor");
+
+  var values= [[consul.getRange("F2").getValue(),
+                consul.getRange("F4").getValue(),
+                consul.getRange("F6").getValue(),
+                consul.getRange("F8").getValue(),
+                consul.getRange("F10").getValue(),
+                consul.getRange("F12").getValue(),
+                consul.getRange("F14").getValue(),
+                consul.getRange("F16").getValue(),]]
+  consul_data.getRange(consul_data.getLastRow()+1, 1, 1, 8).setValues(values);
+  Clears2();
+  
+var lr = consul_data.getLastRow()
+
+for (var i=4;i<=lr;i++){
+    var value1 =consul_data.getRange(i,9).getValue();
+    var value2 =consul_data.getRange(i,8).getValue();
+    var value3 =consul_data.getRange(i,7).getValue();
+    var value4 =consul_data.getRange(i,4).getValue();
+
+    if (value1 >= 3 && value2 >= 3 && value3 >=3 && value4 >=3) {
+        consul_data.getRange(i,10).setValue("Hot Leads");
+  }
+    else {consul_data.getRange(i,10).setValue("Soft Leads")}
+  };
+
+
+consul_data.getRange("I4").setFormula("=(D4*0.3)+(G4*0.4)+(H4*0.3)");
+
+var lr = consul_data.getLastRow()
+var fillDownRange = consul_data.getRange(4,9,lr-3);
+consul_data.getRange("I4").copyTo(fillDownRange);
+
+for (var i=4;i<=lr;i++){
+    var value1 =consul_data.getRange(i,5).getValue();
+    var value2 = consul_data.getRange(i,6).getValue();
+
+    if (value1 >= value2) {
+        consul_data.getRange(i,7).setValue("5");
+  }
+    else if (value1 >= (value2*(1-0.1))) {
+        consul_data.getRange(i,7).setValue("4");
+  }
+    else if (value1 >= (value2*(1-0.2))) {
+        consul_data.getRange(i,7).setValue("3");
+  }
+    else if (value1 >= (value2*(1-0.5))) {
+        consul_data.getRange(i,7).setValue("2");
+  }
+    else {consul_data.getRange(i,7).setValue("1")
+    }
+  }
+}
+
+function filter_HotLeads(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("Category_Franchisee");
+  var rng = sheet.getRange(2, 1, sheet.getLastRow(),4).getValues();
+  var criteria = sheet.getRange(2, 6).getValue();
+  var FData = rng.filter(function(e){return e[3]=== criteria});
+
+  var sheet2 = ss.getSheetByName("Hot Leads_Franchisee");
+  var nRng = sheet2.getRange(2, 1,FData.length, 4).setValues(FData);
+}
+
+function filter_SoftLeads(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("Category_Franchisee");
+  var rng = sheet.getRange(2, 1, sheet.getLastRow(),4).getValues();
+  var criteria = sheet.getRange(3, 6).getValue();
+  var FData = rng.filter(function(e){return e[3]=== criteria});
+
+  var sheet2 = ss.getSheetByName("Soft Leads_Franchisee");
+  var nRng = sheet2.getRange(2, 1,FData.length, 4).setValues(FData);
+}
+
+function filter_HotLeads2(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("Category_Franchisor");
+  var rng = sheet.getRange(2, 1, sheet.getLastRow(),4).getValues();
+  var criteria = sheet.getRange(2, 6).getValue();
+  var FData = rng.filter(function(e){return e[3]=== criteria});
+
+  var sheet2 = ss.getSheetByName("Hot Leads_Franchisor");
+  var nRng = sheet2.getRange(2, 1,FData.length, 4).setValues(FData);
+}
+
+function filter_SoftLeads2(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("Category_Franchisor");
+  var rng = sheet.getRange(2, 1, sheet.getLastRow(),4).getValues();
+  var criteria = sheet.getRange(3, 6).getValue();
+  var FData = rng.filter(function(e){return e[3]=== criteria});
+
+  var sheet2 = ss.getSheetByName("Soft Leads_Franchisor");
+  var nRng = sheet2.getRange(2, 1,FData.length, 4).setValues(FData);
+}
